@@ -1,0 +1,103 @@
+/* wordalyzer_layout.css
+ * Hand rolled by Ralph Gootee
+ */
+ 
+body{
+	background:white;
+	color:#3F3F3F;
+	font-family:"Gill Sans";
+}
+
+a { color:#ff0084; text-decoration: none;}
+
+h2 { 
+	font-size:100%;
+	letter-spacing: +0.1em;
+}
+
+/* main container */
+#container{
+	width:650px;
+	margin:50px auto 30px auto;	
+}
+
+/* header for the main page */
+#header{
+	height:40px;
+	background:white url("/wordalyzer/img/wordalyzer.png") no-repeat;	
+}
+
+/* used for search engines / CSS off version */
+#header h1{
+	display:none;
+}
+
+#content{
+	padding:10px 20px 20px 20px;
+	background:#EFEFEF;
+}
+
+/* the results returned from the query */
+#display{
+	font-size:90%;
+	display:none;
+	margin-top:20px;
+	border-top:1px dotted #AFAFAF;
+}
+
+/* used for the cloud */
+#cloudHistogram{
+	margin:25px 0 30px 0;
+}
+
+#cloudHistogram span{
+	padding:10px;
+	margin:0 5px 0 5px;
+}
+
+#cloudHistogram span em{
+	font-size: 70%;
+	margin-left:5px;
+}
+
+#distribution table{
+	width:90%;
+}
+
+#distribution table td.word {
+	width: 15%;
+	text-align: right;
+	padding-right:5px;
+	font-size:80%;
+}
+
+#distribution span{ 
+	display:block;
+	background:#EEA0C8;
+	color:white;	
+	padding-left:5px;
+	font-size:80%
+}
+
+#footer{
+	margin-top:30px;
+	font-size:80%;
+	color:#D0D0D0;
+	text-align:center;
+}
+
+
+/* for the forms */
+#error{
+	display:none;
+	padding:5px;
+	background: #FDD71E;
+	color:white;
+	margin:5px;
+}
+
+textarea{
+	width:98%;
+	height: 200px;
+	padding:4px;
+}
