@@ -40,6 +40,9 @@ function hideError(){
 	document.getElementById("display").style.display = "block";
 }
 
+/** function to print the tag cloud 
+ *  @param data the xml structure containing the frequency data
+ */
 function printCloud(data){
 	
 	// # of things to print 
@@ -89,7 +92,9 @@ function printCloud(data){
 }
 
 
-/** Prints the distribution table **/
+/** Prints the distribution table 
+ *  @param data the xml structure containing the frequency data
+ */
 function printDistribution(data){
 
 	var str = "";
@@ -118,6 +123,8 @@ function printDistribution(data){
 	var el = document.getElementById("distribution").innerHTML = str;  
 }
 
+/** AJAX callback, parses the return data structure and visualizes the results 
+ */
 function handleResponse() {
     if(http.readyState == 4){
         var response = http.responseText;

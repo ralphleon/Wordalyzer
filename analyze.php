@@ -17,24 +17,14 @@
 			
 			// Remove the case
 			$item = strtolower($item);
-			
-			// Remove punctuation (silly hack)
-			$last = substr($item,strlen($item)-1,strlen($item));
-			
-			if($last == '.' || $last == ',' || $last == ':'){
-				$item = substr($item,0,strlen($item)-1);
-			}
-									
+			$item = trim($item);
+			$item = trim($item,'!@#$%^&*()_-+={}|[]\:";\'<>?,./');
+					
 			if(isset($freq[$item])){
 				$freq[$item] += 1;
 			}
-			else{
-			
-				// Make sure we're not a stop word!
-				if(!isset($stop[$item]))
-				{
-					$freq[$item] = 1;
-				}
+			else if(!isset($stop[$item]) && $item != ""){
+				$freq[$item] = 1;
 			}
 		}
 		
@@ -51,6 +41,10 @@
 ?>
 
 <?
+	/** Main AJAX callback, constructs an XML message with the frequency data
+	 *  TODO replace XML with JSON	
+	 */
+	 
 	$text = $_POST['text'];
 	$ignore = ($_POST['ignore'] == 'true') ? True : False;
 	$max  = 50;

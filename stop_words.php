@@ -659,7 +659,6 @@ z
 zero';
 
 $array = split("\n",$var);
-
 $hash = array();
 
 foreach($array as $e)
