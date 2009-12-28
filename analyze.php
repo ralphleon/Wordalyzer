@@ -9,7 +9,7 @@
 	function analyze($text,$limit)
 	{
 		$stop = include_once("stop_words.php");
-		$words = split(" ",$text);
+		$words = preg_split('/\s+/',$text);
 		
 		$freq = array();
 		
@@ -28,13 +28,13 @@
 			}
 		}
 		
-		// We like our keys so we use asort		
-		arsort($freq);
+		// We like our keys so we use arsort		
+		 arsort($freq);
 		$n = count($freq);
 		
 		if($n < $limit) $limit = $n;
 		
-		$freq = array_slice($freq, 0, $limit);//,true);
+		$freq = array_slice($freq, 0, $limit);
 	
 		return $freq;
 	}
