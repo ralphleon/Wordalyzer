@@ -1,5 +1,7 @@
 /* wordalyzer_layout.css
- * Hand rolled by Ralph Gootee
+ * Hand rolled by Ralph Gootee (rgootee@gmail.com)
+ *
+ * Copyright (c) 2009. Ralph gootee 
  */
  
 body{
@@ -43,6 +45,7 @@ h2 {
 	display:none;
 	margin-top:20px;
 	border-top:1px dotted #AFAFAF;
+	padding-bottom:20px;
 }
 
 /* used for the cloud */
@@ -71,21 +74,39 @@ h2 {
 	font-size:80%;
 }
 
-#distribution span{ 
+#distribution span {
 	display:block;
 	background:#EEA0C8;
 	color:white;	
 	padding-left:5px;
-	font-size:80%
+	font-size:80%	
+}
+
+/* These are used for the unique chart, can't be block elements */
+span.pink {
+	background:#EEA0C8;
+	float:left;
+	color:white;	
+	padding-left:5px;
+	font-size:80%	
+}
+
+span.gray {
+	text-align:right;
+	float:left;
+	background:#CC9098;
+	color:white;	
+	padding-right:5px;
+	font-size:80%	
 }
 
 #footer{
-	margin-top:30px;
+	margin-top:20px;
+	padding-bottom:20px;
 	font-size:80%;
 	color:#D0D0D0;
 	text-align:center;
 }
-
 
 /* for the forms */
 #error{

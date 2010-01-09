@@ -1,12 +1,12 @@
 function createRequestObject() {
-    var ro;
-    var browser = navigator.appName;
-    if(browser == "Microsoft Internet Explorer"){
-        ro = new ActiveXObject("Microsoft.XMLHTTP");
-    }else{
-        ro = new XMLHttpRequest();
-    }
-    return ro;
+	var ro;
+	var browser = navigator.appName;
+	if(browser == "Microsoft Internet Explorer"){
+		ro = new ActiveXObject("Microsoft.XMLHTTP");
+	}else{
+		ro = new XMLHttpRequest();
+	}
+	return ro;
 }
 
 var http = createRequestObject();
@@ -16,8 +16,8 @@ function analyzeText() {
 	
 	var text = document.getElementById("words").value;
 	var ignore = true; //document.getElementById("ignoreCommon").checked;
-    
-   	var params = 'ignore=' + ignore + '&text=' + text;
+	
+	var params = 'ignore=' + ignore + '&text=' + text;
 	http.open("POST",'/wordalyzer/analyze.php', true);
 
 	//Send the proper header information along with the request
@@ -41,7 +41,7 @@ function hideError(){
 }
 
 /** function to print the tag cloud 
- *  @param data the xml structure containing the frequency data
+ *	@param data the xml structure containing the frequency data
  */
 function printCloud(data){
 	
@@ -61,7 +61,7 @@ function printCloud(data){
 	var maxPadding = 15;   
 	var minPadding = 3;
 	
-	var freq = data.getElementsByTagName('item');   
+	var freq = data.getElementsByTagName('item');	
 
 	var str = "";
 	var max = parseFloat(freq[0].getAttribute("hits"));
@@ -83,17 +83,17 @@ function printCloud(data){
 		
 		var padding = (maxPadding-minPadding)*p +minPadding;
 		
-		str += 	"<span style=\"padding:" + padding
+		str +=	"<span style=\"padding:" + padding
 			+	"px;background-color:" + color + "\">" 
-			+ 	"<strong>" + title + "</strong><em>(" + hits + ")</em></span>"; 	
+			+	"<strong>" + title + "</strong><em>(" + hits + ")</em></span>";		
 	}
 
-	var el = document.getElementById("cloudHistogram").innerHTML = str;  
+	var el = document.getElementById("cloudHistogram").innerHTML = str;	 
 }
 
 
 /** Prints the distribution table 
- *  @param data the xml structure containing the frequency data
+ *	@param data the xml structure containing the frequency data
  */
 function printDistribution(data){
 
@@ -115,7 +115,7 @@ function printDistribution(data){
 		p *=100;
 		
 		str += "<tr><td class=\"word\">" + title + "</td><td>" 
-			+ "<span style=\"width:" + p  + "%;\">" + hits +"</span></td></tr>"; 	
+			+ "<span class=\"pink\" style=\"width:" + p  + "%;\">" + hits +"</span></td></tr>";	
 	}
 	
 	str += "</table>";
@@ -123,38 +123,62 @@ function printDistribution(data){
 	var el = document.getElementById("distribution").innerHTML = str;  
 }
 
+/** Prints the uniqueness chart */
+function printUnique(unique, total){
+	
+	var size= 600; // Size of the area in pixels
+	var unique = parseFloat(unique);
+	var total = parseFloat(total);
+	var boring = total - unique;
+	
+	var pUnique = (unique / total);
+	var pBoring = 1 - pUnique;
+	
+	var str = 	"<p><strong>" + total + " </strong> total words with <strong>" 
+				+ unique + "</strong> unique words. <strong>" 
+				+ (pUnique*100).toFixed(2) + "%</strong> unique.</p>";
+				
+	str += "<span class=\"pink\"style=\"width:" + pUnique*size  + "px;\">" + unique + "</span>";
+	str += "<span class=\"gray\"style=\"width:" + pBoring*size  + "px;\">" + boring + "</span>";
+	var el = document.getElementById("unique").innerHTML = str;	 
+}
+
 /** AJAX callback, parses the return data structure and visualizes the results 
  */
 function handleResponse() {
-    if(http.readyState == 4){
-        var response = http.responseText;
-       	
-       	var parser = new DOMParser();
-  		var xmlDoc = parser.parseFromString(response,"text/xml");
-       	
-       	var root = xmlDoc.getElementsByTagName('packet')[0];      	
-       	
-       	if(root){
-       	
-       		// make sure there were no errors
-       		var ok = root.getElementsByTagName('status')[0];
-       		
-       		if(!ok.firstChild)
-       		{
-       			hideError();
-       			
-       			// Print the viz
-       			var data = xmlDoc.getElementsByTagName('data')[0];       			       		
-       		    printCloud(data);
-       		    printDistribution(data);
-       		    		       			
-       		}
-       		else{
-       			showError("Fail: " + ok.firstChild.nodeValue); 
-       		}
-       	}
-       	else{
-       		showError("Fail: I had a problem communicating with my server :(<br/>" + response );      	
-       	}
-    }
+	if(http.readyState == 4){
+		var response = http.responseText;
+
+		var parser = new DOMParser();
+		var xmlDoc = parser.parseFromString(response,"text/xml");
+		
+		var root = xmlDoc.getElementsByTagName('packet')[0];		
+		
+		if(root){
+		
+			// make sure there were no errors
+			var ok = root.getElementsByTagName('status')[0];
+			
+			if(!ok.firstChild){
+				hideError();
+				
+				// Print the viz
+				var data = xmlDoc.getElementsByTagName('data')[0];								
+				printCloud(data);
+				printDistribution(data);
+
+				var freq = xmlDoc.getElementsByTagName('freq')[0].lastChild.nodeValue;
+				var total = xmlDoc.getElementsByTagName('total')[0].lastChild.nodeValue;
+				
+				printUnique(freq,total);
+										
+			}
+			else{
+				showError("Fail: " + ok.firstChild.nodeValue); 
+			}
+		}
+		else{
+			showError("Fail: I had a problem communicating with my server :(<br/>" + response );		
+		}
+	}
 }

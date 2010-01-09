@@ -12,6 +12,8 @@
 		$words = preg_split('/\s+/',$text);
 		
 		$freq = array();
+		$total = 0;
+		$stops = 0;
 		
 		foreach($words as $item){
 			
@@ -19,24 +21,32 @@
 			$item = strtolower($item);
 			$item = trim($item);
 			$item = trim($item,'!@#$%^&*()_-+={}|[]\:";\'<>?,./');
-					
-			if(isset($freq[$item])){
-				$freq[$item] += 1;
-			}
-			else if(!isset($stop[$item]) && $item != ""){
-				$freq[$item] = 1;
+			
+			if($item != ""){ 		
+				$total++;
+				
+				// Known word, new word, or stop word
+				if(isset($freq[$item])){
+					$freq[$item] += 1;
+				}
+				else if(!isset($stop[$item])){
+					$freq[$item] = 1;
+				}
+				else {
+					$stops++;
+				}
 			}
 		}
 		
 		// We like our keys so we use arsort		
-		 arsort($freq);
+		arsort($freq);
 		$n = count($freq);
 		
 		if($n < $limit) $limit = $n;
 		
 		$freq = array_slice($freq, 0, $limit);
 	
-		return $freq;
+		return array("freq" => $freq, "total" => $total, "stops" => $stops);
 	}
 ?>
 
@@ -58,12 +68,17 @@
 		
 		$data = analyze($text,$max);
 		
+		$freq = $data["freq"];
+		
 		echo '<data>';
 		// Replace me with XML
-		foreach($data as $key => $value){
+		foreach($freq as $key => $value){
 			echo '<item title="' . $key .'" hits="'.$value.'"/>';		
 		}
 		echo '</data>';	
+		
+		echo '<freq>' . $data['stops'] . '</freq>';
+		echo '<total>' . $data['total'] . '</total>';
 	}else{
 		$err ="Please ... enter some text in the text box ;)";
 	}
