@@ -77,7 +77,7 @@
 		}
 		echo '</data>';	
 		
-		echo '<freq>' . $data['stops'] . '</freq>';
+		echo '<stops>' . $data['stops'] . '</stops>';
 		echo '<total>' . $data['total'] . '</total>';
 	}else{
 		$err ="Please ... enter some text in the text box ;)";

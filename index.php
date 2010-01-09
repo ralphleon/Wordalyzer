@@ -57,8 +57,7 @@
 			<p>Copyright (C) 2009 Ralph Gootee. Made to impress wordnik in ~3hrs. Valid 
 				<a href="http://validator.w3.org/check?uri=referer">xhtml</a> &amp;
 			 	<a href="http://jigsaw.w3.org/css-validator/check/referer">css</a>.
-				<a href="http://github.com/ralphleon/Wordalyzer">Open Source.</a>
-				
+				<a href="http://github.com/ralphleon/Wordalyzer">Open Source.</a>				
   			</p>
 		</div>
 			

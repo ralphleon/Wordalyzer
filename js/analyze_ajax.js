@@ -124,12 +124,12 @@ function printDistribution(data){
 }
 
 /** Prints the uniqueness chart */
-function printUnique(unique, total){
+function printUnique(stops, total){
 	
 	var size= 600; // Size of the area in pixels
-	var unique = parseFloat(unique);
+	var boring = parseFloat(stops);
 	var total = parseFloat(total);
-	var boring = total - unique;
+	var unique = total - boring;
 	
 	var pUnique = (unique / total);
 	var pBoring = 1 - pUnique;
@@ -167,10 +167,10 @@ function handleResponse() {
 				printCloud(data);
 				printDistribution(data);
 
-				var freq = xmlDoc.getElementsByTagName('freq')[0].lastChild.nodeValue;
+				var stops = xmlDoc.getElementsByTagName('stops')[0].lastChild.nodeValue;
 				var total = xmlDoc.getElementsByTagName('total')[0].lastChild.nodeValue;
 				
-				printUnique(freq,total);
+				printUnique(stops,total);
 										
 			}
 			else{
